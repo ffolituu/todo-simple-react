@@ -253,7 +253,7 @@ body {
   opacity: 0;
 }
 .c-cb > label {
-  font-size: inherit;
+  font-size: 23px;
   font-family: inherit;
   line-height: inherit;
   display: inline-block;
@@ -261,6 +261,8 @@ body {
   padding: 8px 15px 5px;
   cursor: pointer;
   touch-action: manipulation;
+  color: #446ca9;
+  font-weight: bold;
 }
 .c-cb > label::before {
   content: "";
