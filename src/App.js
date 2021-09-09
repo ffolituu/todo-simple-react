@@ -11,27 +11,52 @@ function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [count, setCount] = useState(props.tasks.length);
 
-  function addTask(name){
-    const newTask = { id: "todo-"+nanoid(), name: name, completed: false };
+  function addTask(name) {
+    const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
     setTasks([...tasks, newTask]);
     setCount(count + 1);
+  }
+
+  function toggleTaskCompleted(id) {
+    const updateTask = tasks.map(task => {
+
+      if(task.id === id){
+        return {...task, completed: !task.completed}
+      }
+      return task;
+    })
+    setTasks(updateTask);
+    console.log(tasks);
+  }
+
+  function deleteTask(id){
+    const result = tasks.filter(task => id !== task.id);
+    setCount(result.length);
+    setTasks(result);
   }
 
 
   return (
     <div className="todoapp stack-large">
       <h1>Todo Application</h1>
-      <Form onAddTask={addTask}/>
+      <Form onAddTask={addTask} />
       <div className="filters btn-group stack-exception">
-        <FilterButton name="all" pressed={true}/>
-        <FilterButton name="active" pressed={false}/>
-        <FilterButton name="completed" pressed={false}/>
+        <FilterButton name="all" pressed={true} />
+        <FilterButton name="active" pressed={false} />
+        <FilterButton name="completed" pressed={false} />
       </div>
-      <Counter count={count}/>
+      <Counter count={count} />
       {/* Todo List */}
       <ul className="todo-list stack-large stack-exception" aria-labelledby="list-heading">
         {tasks.map(task =>
-          <Todo key={task.id} name={task.name} completed={task.completed} id={task.id} />
+          <Todo
+            key={task.id}
+            name={task.name}
+            completed={task.completed}
+            id={task.id} 
+            toggleTaskCompleted={toggleTaskCompleted}  
+            deleteTask={deleteTask}
+          />
         )}
       </ul>
     </div>
